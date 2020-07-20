@@ -40,9 +40,9 @@ RUN pip3 install --timeout=3600 boto oss2 pycryptodome twilio python-ldap config
 
 
 # Scripts
-COPY /scripts_7.1 /scripts
-COPY templates /templates
-COPY services /services
+COPY scripts_7.1 /scripts
+COPY /image/pro_seafile_7.1/templates /templates
+COPY /image/pro_seafile_7.1/services /services
 
 RUN mkdir -p /etc/my_init.d && \
     rm -f /etc/my_init.d/* && \
