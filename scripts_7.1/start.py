@@ -47,10 +47,10 @@ def main():
     if not exists(generated_dir):
         os.makedirs(generated_dir)
 
-    if is_https():
-        init_letsencrypt()
-    generate_local_nginx_conf()
-    call('nginx -s reload')
+#    if is_https():
+#        init_letsencrypt()
+#    generate_local_nginx_conf()
+#    call('nginx -s reload')
 
     wait_for_mysql()
     init_seafile_server()

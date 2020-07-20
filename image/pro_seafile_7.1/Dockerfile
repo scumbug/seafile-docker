@@ -11,7 +11,7 @@ RUN apt-get install -y vim htop net-tools psmisc wget curl git
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get install tzdata -y
 
 # Nginx
-RUN apt-get install -y nginx
+#RUN apt-get install -y nginx
 
 # Java
 RUN apt-get install -y openjdk-8-jre
@@ -40,7 +40,7 @@ RUN pip3 install --timeout=3600 boto oss2 pycryptodome twilio python-ldap config
 
 
 # Scripts
-COPY scripts_7.1 /scripts
+COPY /scripts_7.1 /scripts
 COPY templates /templates
 COPY services /services
 
@@ -48,16 +48,16 @@ RUN mkdir -p /etc/my_init.d && \
     rm -f /etc/my_init.d/* && \
     cp /scripts/create_data_links.sh /etc/my_init.d/01_create_data_links.sh
 
-RUN mkdir -p /etc/service/nginx && \
-    rm -f /etc/nginx/sites-enabled/* /etc/nginx/conf.d/* && \
-    mv /services/nginx.conf /etc/nginx/nginx.conf && \
-    mv /services/nginx.sh /etc/service/nginx/run
+#RUN mkdir -p /etc/service/nginx && \
+#    rm -f /etc/nginx/sites-enabled/* /etc/nginx/conf.d/* && \
+#    mv /services/nginx.conf /etc/nginx/nginx.conf && \
+#    mv /services/nginx.sh /etc/service/nginx/run
 
 
 # Seafile
 WORKDIR /opt/seafile
 
-ENV SEAFILE_VERSION=7.1.3 SEAFILE_SERVER=seafile-pro-server
+ENV SEAFILE_VERSION=7.1.4 SEAFILE_SERVER=seafile-pro-server
 
 RUN mkdir -p /opt/seafile/ && cd /opt/seafile/ && \
     wget -O seafile-pro-server_${SEAFILE_VERSION}_x86-64_Ubuntu.tar.gz \
@@ -66,7 +66,8 @@ RUN mkdir -p /opt/seafile/ && cd /opt/seafile/ && \
     rm -f seafile-pro-server_${SEAFILE_VERSION}_x86-64_Ubuntu.tar.gz
 
 
-EXPOSE 80
+EXPOSE 8000
+EXPOSE 8082
 
 
 CMD ["/sbin/my_init", "--", "/scripts/start.py"]
